@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入vue.js库文件 -->
+    <script type="text/javascript" src="../JS/vue.js"></script>
+    <!-- 1.已安装vue-router -->
+    <script src="https://unpkg.com/vue-router@3"></script>
+    <title>webpack的基本使用</title>
+</head>
+
+<body>
+    <!-- webpack概述：一个（项目构建工具）打包工具
+        1.创建列表隔行变色项目--- 最终报错的了，在index.js使用了ES6的模块化语法，太高级了不兼容
+        步骤①：新建项目空白目录，并运行npm init -y 命令，初始化包管理配置文件package.json
+        ②新建src源代码目录，
+        ③新建src ->index.html首页
+        ④初始化页面基本结构
+        ⑤运行 npm install jquery -s 命令，安装jquery
+        ⑥通过模块化的形式（index.js），实现列表隔行变色效果
+     -->
+
+    <!-- !!!!!!!!!!!!!!!!!!!!!! -->
+    <!--为了解决上述的兼容性问题所以采用webpack解决
+
+    2. 在项目中安装和配置webpack
+    步骤①：运行npm install webpack webpack-cli -D 命令。安装webpack相关的包
+    ②：在项目根目录先，创建名为webpack.config.js的webpack配置文件
+    ③在webpack的配置文件中，初始化如下基本配置
+    module.exports = {
+        mode:'development'
+        //mode用来指定构建模式，有两种选项development(开发模式)\production，
+        //二者的区别：development转化出来的代码不会压缩混淆，转换时间短一些
+        //production：会压缩混淆代码，转化时间也会长一些，是等项目正式上线之后才用，
+    }
+    ④：在package.json配置文件中的scripts节点下，新增dev脚本如下：
+    "scripts":{
+        "dev":"webpack"//script节点下的脚本，可以通过 npm run执行
+    }
+    ⑤：在终端中运行 npm run dev 命令，启动webpack进行项目打包。
+
+    -->
+
+    <!-- 3.配置打包的入口与出口
+        webpack之前默认打包的入口文件为src->index.js
+                      打包的出口文件为dist->main.js
+        如果要修改打包的入口与出口，可以在 webpack.config.js 中新增如下配置信息：
+        const path = require('path')  //导入node.js中专门操作路径的模块
+        module.exports = {
+            entry:path.join(__dirname, './src/index.js')  //打包文件入口的路径
+            output:{
+                path:path.join(__dirname, './dist'), //输出文件的存放路径
+                filename:'bundle.js' //输出文件的名称
+            }
+        }
+        在index.html中的JS引入文件就要写对路径，找到输出文件对应位置
+
+     -->
+
+    <!-- 4.配置webpack自动打包功能
+        步骤①：运行npm install webpack-dev-server -D 命令，安装支持项目自动打包工具
+        ②：修改package.json -> scripts中的dev 命令如下：
+        "scripts":{
+            "dev":"webpack-dev-server" //script节点下的脚本，可以通过npm run 执行
+        }
+        ③在webpack.config.js中 添加 devserver对象，命令如下：
+        devServer: {
+            static: {
+                directory: path.join(__dirname, './'),
+                watch: true
+            }
+         }
+        ④：将src->index.html中的 script脚本的引用路径修改为"/bundle.js",该文件是虚拟的，看不见
+        ⑤：运行npm run dev 命令，重新进行打包
+        ⑥：在浏览器中查看自动打包效果
+     -->
+
+
+     <!-- 5.配置html-webpack-plugin生成预览页面【即一进locahost80就可以看见index.html】
+        步骤①：运行npm install html-webpack-plugin -D 命令，安装生成预览页面的插件
+        ②：修改webpack.config.js 文件头部区域，添加如下信息：
+        //导入生成头部预览页面的插件，得到一个构造函数
+        const HtmlWebpackPlugin = require('html-webpack-plugin')
+        const htmlPlugin = new HtmlWebpackPlugin({   //创建插件的实例对象
+            template:'./src/index.html'  //指定要用到的模板文件[指定要复制的页面]【也就是写index.html的路径】
+            filename:'index.html' //指定生成文件的文件名称，该文件存在与内存中，在目录中不显示
+
+        })
+        ③：修改webpack.config.js 文件中向外暴露的配置对象，新增如下配置节点：
+        module.exports = {
+            plugins: [htmlPlugin] //plugins数组 是webpack 打包期间会用到的一些插件列表
+        }
+    -->
+
+
+    <!-- 6.配置自动打包参数 
+        //在package.json文件中配置
+        //--open 打包完成后自动打开浏览器的页面
+        //--host配置IP地址
+        //--port配置端口
+        "scripts":{
+            "dev":"webpack-dev-server --open --host 127.0.0.1 -- port 8888"
+        }
+    -->
+<!-- 只有修改了配置文件就要重启打包工具，然后npm run dev -->
+
+</body>
+
+</html>

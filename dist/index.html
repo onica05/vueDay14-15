@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入jquery文件 -->
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+
+    <!-- 引入JS文件-模块化，这里导入的文件一定要是webpack转换之后的代码，不然会报错 -->
+    <!-- <script src="../src/index.js"></script> -->
+
+    <!-- 这个main.js是通过webpack转换之后的，这里不存在兼容性问题了 -->
+    <!-- <script src="../dist/main.js"></script> -->
+
+    <!-- 这个bundle.js是自定义的打包出口，内容跟main.js一样 -->
+    <!-- <script src="../dist/bundle.js"></script> -->
+
+    <!-- 自动打包 -->
+    <script src="/bundle.js"></script>
+
+
+    <title>列表隔行变色项目案例-结合webpack使用</title>
+<script defer src="bundle.js"></script></head>
+
+<body>
+    <!-- webpack概述：一个（项目构建工具）打包工具
+        1.创建列表隔行变色项目
+        步骤①：新建项目空白目录，并运行npm init -y 命令，初始化包管理配置文件package.json
+        ②新建src源代码目录，
+        ③新建src ->index.html首页
+        ④初始化页面基本结构
+        ⑤运行 npm install jquery -s 命令，安装jquery
+        ⑥通过模块化的形式（index.js），实现列表隔行变色效果
+         
+     -->
+    <input type="text" placeholder="请输入内容...">
+    <ul>
+        <li>这是第1个li</li>
+        <li>这是第2个li</li>
+        <li>这是第3个li</li>
+        <li>这是第4个li</li>
+        <li>这是第5个li</li>
+        <li>这是第6个li</li>
+        <li>这是第7个li</li>
+        <li>这是第8个li</li>
+        <li>这是第9个li</li>
+    </ul>
+
+    <div id="box">111111</div>
+    <img src="../src/images/88e3b9e0-312d-4285-ba9d-7b0e38d8026d.jpg">
+
+    <hr />
+    <!-- 将来要被vue控制的区域 -->
+    <div id="app">
+
+    </div>
+
+
+</body>
+
+</html>
